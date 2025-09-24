@@ -61,14 +61,11 @@ namespace LancoltLista
 				this.fejelem = new Elem<T> ();
 				this.count = 0;
 			}
-
 			public void Add(T ujertek)
 			{
 				new Elem<T>(this.fejelem.bal, ujertek);
 				count++;
 			}
-
-
 			private Elem<T> Keres(T ertek)
 			{
 				Elem<T> aktelem = fejelem.jobb;
@@ -78,7 +75,6 @@ namespace LancoltLista
 				}
 				return aktelem;
 			}
-
 			public void Remove(T ertek)
 			{
 				Elem<T> elem = Keres(ertek);
@@ -92,7 +88,6 @@ namespace LancoltLista
 					count--;
 				}
 			}
-
 			public void RemoveAll(T ertek)
 			{
 				Elem<T> aktelem = fejelem.jobb;
@@ -106,7 +101,6 @@ namespace LancoltLista
 					}
 				}
 			}
-
 			public void RemoveAt(int i)
 			{
 				if (count <= i)
@@ -127,6 +121,36 @@ namespace LancoltLista
 				aktelem.Töröl();
 				count--;
 			}
+
+			// FindIndex
+
+
+			/// <summary>
+			/// Megkeresi az első elemet a listában, amire teljesül az adott tulajdonság. Ha nincs ilyen, akkor -1-et ad vissza.
+			/// </summary>
+			/// <param name="predikatum">A tulajdonság</param>
+			/// <returns>A megtalált első elem indexe.</returns>
+			public int FindIndex() => Count == 0 ? -1 : 0;
+			public int FindIndex(Func<T, bool> predikatum)
+			{
+				int i = 0;
+				Elem<T> aktelem = fejelem.jobb;
+				while (aktelem != fejelem && !predikatum(aktelem.value))
+				{
+					i++;
+					aktelem = aktelem.jobb;
+				}
+				return aktelem == fejelem ? -1 : i;
+			}
+
+			// FindLastIndex
+			// Where
+			// Count
+			// Select
+			// First
+			// Last
+			// Sum
+			// Reverse
 
 
 			public override string ToString()
